@@ -1,3 +1,18 @@
+# this script extracts data of the Fahrplan and calls with these
+# the herald moderator card - template in LaTeX 
+# for the Chaos Communication Camp 2015
+# Author: Simon Putzke / nerdbeere <nerdbeere@c-base.org>
+# this file is licensed under the Beer-Ware License:
+
+##############################
+#   #### Beer-Ware License (Revision 42): ####
+# nerdbeere wrote this file. As long as you retain this notice
+# you can do whatever you want with this stuff.
+# If we meet some day, and you think this stuff is worth it,
+# you can buy me a beer in return.
+# <nerdbeere@c-base.org>
+##############################
+
 #!/usr/bin/perl
 
 use strict;
