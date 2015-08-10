@@ -1,0 +1,165 @@
+% this is a template for the herald moderator card during the
+% Chaos Communication Camp 2015
+% Author: Simon Putzke / nerdbeere <nerdbeere@c-base.org>
+% this file is licensed under the Beer-Ware License:
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%   %%%% Beer-Ware License (Revision 42): %%%%
+% nerdbeere wrote this file. As long as you retain this notice
+% you can do whatever you want with this stuff.
+% If we meet some day, and you think this stuff is worth it,
+% you can buy me a beer in return.
+% <nerdbeere@c-base.org>
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\NeedsTeXFormat{LaTeX2e}[1999/12/01]
+\ProvidesPackage{ccc_herald}[2015/08/01 CCC Herald Talk Card]
+
+\ProcessOptions\relax
+
+\RequirePackage{color}
+
+
+%%%%%%%% Define variables used for this template
+
+\def\eventtitle#1{\def\@eventtitle{#1}}
+\newcommand{\printtitle}{\@eventtitle}
+
+\def\subtitle#1{\def\@subtitle{#1}}
+\newcommand{\printsubtitle}{\@subtitle}
+
+\def\shorttext#1{\def\@shorttext{#1}}
+\newcommand{\printshorttext}{\@shorttext}
+
+\def\longtext#1{\def\@longtext{#1}}
+\newcommand{\printlongtext}{\@longtext}
+
+\def\speaker#1{\def\@speaker{#1}}
+\newcommand{\printspeaker}{\@speaker}
+
+\def\shortbio#1{\def\@shortbio{#1}}
+\newcommand{\printshortbio}{\@shortbio}
+
+\def\location#1{\def\@location{#1}}
+\newcommand{\printlocation}{\@location}
+
+\def\timeofevent#1{\def\@timeofevent{#1}}
+\newcommand{\printtimeofevent}{\@timeofevent}
+
+\def\dayofevent#1{\def\@dayofevent{#1}}
+\newcommand{\printdayofevent}{\@dayofevent}
+
+\def\duration#1{\def\@duration{#1}}
+\newcommand{\printduration}{\@duration}
+
+\def\track#1{\def\@track{#1}}
+\newcommand{\printtrack}{\@track}
+
+\def\language#1{\def\@language{#1}}
+\newcommand{\printlanguage}{\@language}
+
+\def\id#1{\def\@id{#1}}
+\newcommand{\printid}{\@id}
+
+% define layout commands
+  % define text layout
+\newcommand\textline[3][t]{
+  \par\smallskip\noindent\parbox[#1]{.15\textwidth}{\raggedright#2}
+  \parbox[#1]{.85\textwidth}{#3}
+}
+
+\newcommand\headline[7][t]{
+  \par\smallskip\noindent\parbox[#1]{.14\textwidth}{#2}%{\raggedright#2}
+  \hfill
+  \parbox[#1]{.14\textwidth}{#3}
+  \hfill
+  \parbox[#1]{.14\textwidth}{#4}
+  \hfill
+  \parbox[#1]{.14\textwidth}{#5}
+  \hfill
+  \parbox[#1]{.3\textwidth}{#6}
+  \hfill
+  \parbox[#1]{.1\textwidth}{#7}
+ % \parbox[#1]{.333\textwidth}{\raggedleft{4}}\par\smallskip
+}
+
+% define specific layout commands
+
+\newcommand{\logoccc}[1]{\def\@logoccc{#1}}
+\def\@logoccc{ccc.pdf}
+
+\newcommand{\logocamp}[1]{\def\@logocamp{#1}}
+\def\@logocamp{camp.pdf}
+
+%%%%%%%%%% desired Layout for this template
+
+%%% based on A5 quer, has to be defined in a main, though
+% this is as generic as possible, but margin need to be 1cm
+
+% Saal G    12:45     Day 1   Track: Hardware ..      en
+%
+% \big{Titel}: 3D Casting Aluminium
+% Subtitle: xyz
+%
+% \textbf{Short:} \italic{Lorem ipsum}
+%
+%\textbf{Long:} Lorem Ipsum
+%
+%
+% \big{Speaker: \textbf{Julia Longtin}}
+%
+% \textbf{Kurzbio:} Lorem Ipsum
+
+\date{\today}
+\renewcommand*{\maketitle}{
+  \begin{titlepage}
+    \def\@foot@er{}
+    \thispagestyle{empty}
+   % \enlargethispage{1cm}
+    %\vspace*{1cm}
+  %  \setlength\oddsidemargin{1cm}
+     % \begin{center}
+      
+    %{\mbox{
+       % \begin{tabular}{ccccc}
+       % \printlocation & \printtimeofevent & \printdayofevent & \printtrack & \printlanguage \\
+      %  \end{tabular}
+      %}
+\headline[t]{Saal: \printlocation} {\printtimeofevent} {\printduration} {Day: \printdayofevent} {Track: \printtrack} {\printlanguage}
+        %  }
+    % \end{center}
+    \par
+%    \vfill
+  %\vspace{0.01\paperheight}
+  %\hrulefill\par
+  \vspace{0.015\paperheight}
+ % \begin{center}
+ % {\mbox{
+ %   \begin{description}
+      \textline[t] {\large Title:} {\large \textbf{\printtitle}}
+      %\par
+      %\vspace{0.01\paperheight}
+      \textline[t] {Subtitle:} {\printsubtitle}
+      %\par
+      %\vspace{0.01\paperheight}
+      \textline[t]{\large Speaker:} {\large \textbf{\printspeaker}}
+      \vspace{0.015\paperheight}
+      \textline[t]{\textbf{Short:}} {\textit{\printshorttext}}
+      %\par
+      %\vspace{0.01\paperheight}
+      \textline[t]{\textbf{Long:}} {\printlongtext}
+%      \par
+      %\par
+      %\vspace{0.01\paperheight}
+%      \textline[t]{\textbf{Kurzbio:}} {\printshortbio}
+  %  \vfill
+   % \hfill
+   % {\footnotesize ID: \printid}
+   % \end{description}
+  %      }
+  %}
+  %\end{center}
+  %{\small \@foot@er \par \smallskip \@date}
+  %\textline[t]{Speaker:}{H. Toothtroot}
+  \end{titlepage}
+  }
