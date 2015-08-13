@@ -63,7 +63,7 @@ sub print_tex {
   open my $fh, '> :encoding(UTF-8)', "talk" or die $!;
 
   # oder wenn die reihenfolge egal ist, einfach ( keys %$event )
-  foreach my $key (qw(dayofevent shorttext longtext duration language speaker location timeofevent track eventtitle subtitle id)) {
+  foreach my $key (qw(dayofevent shorttext longtext duration language speaker location timeofevent track eventtitle subtitle id translation)) {
     printf $fh '\%s{%s}', $key, $event->{$key};
     print $fh "\n";
   }
@@ -104,7 +104,13 @@ sub make_latex {
   foreach my $event (@event_list) {
      my $shorttext = regex_magic($event->{abstract});
      my $longtext = regex_magic($event->{description});
-     my $language;
+     my $translation;
+     if ($event->{room} eq "Project 2501") { 
+      $translation = "8011";
+     }
+     elsif ($event->{room} eq "Simulacron-3") { 
+      $translation = "8012";
+     }
 #     if ($event->{language} =~ /^*$/) { $language = "nA"; } else { $language = $event->{language}; }
      %event_props = 
       (
@@ -119,7 +125,8 @@ sub make_latex {
         track                 => clean_special_chars($event->{track}),
         eventtitle            => clean_special_chars($event->{title}),
         subtitle              => clean_special_chars($event->{subtitle}),
-        id                    => $event->{id}
+        id                    => $event->{id},
+        translation           => $translation
       #  cardname              => clean_special_chars($event->{room})."_".clean_special_chars(parse_day( $event->{date} ))
       );
     print_tex(\%event_props);
