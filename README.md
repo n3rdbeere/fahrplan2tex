@@ -1,6 +1,6 @@
 # Create Herald Cards for the Chaos Communication Camp 2015
 
-This Parser creates A5 Cards using the Data of the Fahrplan
+This Parser creates Cards using the Data of the Fahrplan
 
 ## Dependencies
 
@@ -11,6 +11,8 @@ This parser is written in Perl and needs the library
 And the Fahrplan-data provided as json-file in this directory, named
 
 `schedule.json`
+
+It also uses LaTeX, only core packages are needed here.
 
 ## Usage
 
