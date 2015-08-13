@@ -23,6 +23,11 @@ use JSON::Parse 'json_file_to_perl';
 my $json = json_file_to_perl('schedule.json');
 
 my @event_list;
+my $fahrplan_version = $json->{schedule}->{version};
+$fahrplan_version =~ m/(^\d+\.\d+)/;
+$fahrplan_version = $1; 
+$fahrplan_version =~ s/\./\_/;
+my $version = "cards_version_".$fahrplan_version;
 
 my @days = @{ $json->{schedule}->{conference}->{days} };
 foreach my $day (@days) {
@@ -118,9 +123,10 @@ sub make_latex {
       #  cardname              => clean_special_chars($event->{room})."_".clean_special_chars(parse_day( $event->{date} ))
       );
     print_tex(\%event_props);
-    system("pdflatex", "-jobname", $event->{room}."_".$event->{date}, "main.tex");
-    system("rm", $event->{room}."_".$event->{date}.".aux");
-    system("rm", $event->{room}."_".$event->{date}.".log");
+    system("mkdir", "-p", $version);
+    system("pdflatex", "-jobname", $version."/".$event->{room}."_".$event->{date}, "main.tex");
+    #system("pdflatex", "-jobname", $event->{room}."_".$event->{date}, "main.tex");
+    system("rm", $version."/".$event->{room}."_".$event->{date}.".aux", $version."/".$event->{room}."_".$event->{date}.".log");
   }
 }
 
