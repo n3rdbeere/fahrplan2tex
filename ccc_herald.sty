@@ -61,11 +61,19 @@
 \def\id#1{\def\@id{#1}}
 \newcommand{\printid}{\@id}
 
+\def\translation#1{\def\@translation{#1}}
+\newcommand{\printtranslation}{\@translation}
+
 % define layout commands
   % define text layout
 \newcommand\textline[3][t]{
   \par\smallskip\noindent\parbox[#1]{.15\textwidth}{\raggedright#2}
   \parbox[#1]{.85\textwidth}{#3}
+}
+
+\newcommand\translationline[2][t]{
+  \par\smallskip\noindent\parbox[#1]{.15\textwidth}{\raggedright#2}
+ % \parbox[#1]{.15\textwidth}{#2}
 }
 
 \newcommand\headline[7][t]{
@@ -149,6 +157,11 @@
 
       \infoline[t] {Chef: 2433} {Lindworm: 5463} {Emergency: 112} {Security: 110} {Heaven: 1023} {Speakers Desk: 1020} {Info Desk: 1111}
   \vspace{0.015\paperheight}
+      \translationline[t] {Translation: \printtranslation}
+  \par
+  \hrulefill\par
+  \vspace{0.015\paperheight}
+  %\vspace{0.015\paperheight}
  % \begin{center}
  % {\mbox{
  %   \begin{description}
