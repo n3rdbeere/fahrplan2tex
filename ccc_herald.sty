@@ -83,6 +83,19 @@
  % \parbox[#1]{.333\textwidth}{\raggedleft{4}}\par\smallskip
 }
 
+\newcommand\infoline[7][t]{
+  \par\smallskip\noindent
+  %\parbox[#1]{.14\textwidth}{#1}
+  \parbox[#1]{.14\textwidth}{#2}
+  \parbox[#1]{.14\textwidth}{#3}
+  \parbox[#1]{.14\textwidth}{#4}
+  \parbox[#1]{.14\textwidth}{#5}
+  \parbox[#1]{.14\textwidth}{#6}
+  \parbox[#1]{.14\textwidth}{#7}
+%  \parbox[#1]{.14\textwidth}{#8}
+}
+
+%# 7 0.14
 % define specific layout commands
 
 \newcommand{\logoccc}[1]{\def\@logoccc{#1}}
@@ -125,29 +138,32 @@
        % \printlocation & \printtimeofevent & \printdayofevent & \printtrack & \printlanguage \\
       %  \end{tabular}
       %}
-\headline[t]{Saal: \printlocation} {\printtimeofevent} {\printduration} {Day: \printdayofevent} {Track: \printtrack} {\printlanguage}
+\headline[t]{\printlocation} {\printtimeofevent} {\printduration} {Day: \printdayofevent} {Track: \printtrack} {\printlanguage}
         %  }
     % \end{center}
     \par
 %    \vfill
   %\vspace{0.01\paperheight}
-  %\hrulefill\par
+  \hrulefill\par
+
+
+      \infoline[t] {Chef: 2433} {Lindworm: 5463} {Emergency: 112} {Security: 110} {Heaven: 1023} {Speakers Desk: 1020} {Info Desk: 1111}
   \vspace{0.015\paperheight}
  % \begin{center}
  % {\mbox{
  %   \begin{description}
-      \textline[t] {\large Title:} {\large \textbf{\printtitle}}
+      \textline[t] {\LARGE Title:} {\LARGE \textbf{\printtitle}}
       %\par
       %\vspace{0.01\paperheight}
       \textline[t] {Subtitle:} {\printsubtitle}
       %\par
       %\vspace{0.01\paperheight}
-      \textline[t]{\large Speaker:} {\large \textbf{\printspeaker}}
+      \textline[t]{\large Speaker:} {\Large \textbf{\printspeaker}}
       \vspace{0.015\paperheight}
-      \textline[t]{\textbf{Short:}} {\textit{\printshorttext}}
+      \textline[t]{\textbf{Short:}} {\Large\textit{\printshorttext}}
       %\par
       %\vspace{0.01\paperheight}
-      \textline[t]{\textbf{Long:}} {\printlongtext}
+      %\textline[t]{\textbf{Long:}} {\printlongtext}
 %      \par
       %\par
       %\vspace{0.01\paperheight}
