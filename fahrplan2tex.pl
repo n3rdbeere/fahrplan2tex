@@ -31,10 +31,8 @@ my $version = "cards_version_".$fahrplan_version;
 
 my @days = @{ $json->{schedule}->{conference}->{days} };
 foreach my $day (@days) {
-    print "one day has passed\n";
     foreach my $event ( @{ $day->{rooms}->{"Project 2501"} }, @{ $day->{rooms}->{"Simulacron-3"} } )
     {
-        print "push event\n";
         push @event_list, $event;
     }
 }
@@ -111,7 +109,6 @@ sub make_latex {
      elsif ($event->{room} eq "Simulacron-3") { 
       $translation = "8012";
      }
-#     if ($event->{language} =~ /^*$/) { $language = "nA"; } else { $language = $event->{language}; }
      %event_props = 
       (
         dayofevent            => clean_special_chars(parse_day( $event->{date} )),
@@ -127,7 +124,6 @@ sub make_latex {
         subtitle              => clean_special_chars($event->{subtitle}),
         id                    => $event->{id},
         translation           => $translation
-      #  cardname              => clean_special_chars($event->{room})."_".clean_special_chars(parse_day( $event->{date} ))
       );
     print_tex(\%event_props);
     system("mkdir", "-p", $version);
