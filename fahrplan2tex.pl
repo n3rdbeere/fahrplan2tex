@@ -89,6 +89,7 @@ sub clean_special_chars {
   $string =~ s/\$/\\\$/g;
   $string =~ s/\_//g;
   $string =~ s/\%/\\\%/g;
+  $string =~ s/\#/\\\#/g;
   $string =~ s/\^\w*//g;
   return $string;
 }
@@ -99,14 +100,14 @@ sub make_latex {
      my $shorttext = regex_magic($event->{abstract});
      my $longtext = regex_magic($event->{description});
      my $language;
-     if ($event->{language} =~ /^*$/) { $language = "nA"; } else { $language = $event->{language}; }
+#     if ($event->{language} =~ /^*$/) { $language = "nA"; } else { $language = $event->{language}; }
      %event_props = 
       (
         dayofevent            => clean_special_chars(parse_day( $event->{date} )),
         shorttext             => $shorttext,
         longtext              => $longtext,
         duration              => clean_special_chars($event->{duration}),
-        language              => clean_special_chars($language),
+        language              => clean_special_chars($event->{language}),
         speaker               => clean_special_chars(make_persons( $event->{persons} ) ),
         location              => clean_special_chars($event->{room}),
         timeofevent           => clean_special_chars($event->{start}),
@@ -114,11 +115,12 @@ sub make_latex {
         eventtitle            => clean_special_chars($event->{title}),
         subtitle              => clean_special_chars($event->{subtitle}),
         id                    => $event->{id}
+      #  cardname              => clean_special_chars($event->{room})."_".clean_special_chars(parse_day( $event->{date} ))
       );
     print_tex(\%event_props);
-    system("pdflatex", "-jobname", $event->{id}, "main.tex");
-    system("rm", $event->{id}.".aux");
-    system("rm", $event->{id}.".log");
+    system("pdflatex", "-jobname", $event->{room}."_".$event->{date}, "main.tex");
+    system("rm", $event->{room}."_".$event->{date}.".aux");
+    system("rm", $event->{room}."_".$event->{date}.".log");
   }
 }
 
