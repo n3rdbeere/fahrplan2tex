@@ -64,6 +64,9 @@
 \def\translation#1{\def\@translation{#1}}
 \newcommand{\printtranslation}{\@translation}
 
+\def\technical#1{\def\@technical{#1}}
+\newcommand{\printtechnical}{\@technical}
+
 % define layout commands
   % define text layout
 \newcommand\textline[3][t]{
@@ -71,9 +74,9 @@
   \parbox[#1]{.85\textwidth}{#3}
 }
 
-\newcommand\translationline[2][t]{
-  \par\smallskip\noindent\parbox[#1]{.15\textwidth}{\raggedright#2}
- % \parbox[#1]{.15\textwidth}{#2}
+\newcommand\technicalline[3][t]{
+  \par\smallskip\noindent\parbox[#1]{.3\textwidth}{\raggedright#2}
+  \parbox[#1]{.2\textwidth}{#3}
 }
 
 \newcommand\headline[7][t]{
@@ -157,7 +160,7 @@
 
       \infoline[t] {Chef: 2433} {Lindworm: 5463} {Emergency: 112} {Security: 110} {Heaven: 1023} {Speakers Desk: 1020} {Info Desk: 1111}
   \vspace{0.015\paperheight}
-      \translationline[t] {Translation: \printtranslation}
+      \technicalline[t] {Translation (check if available): \printtranslation} {Technical Coordinator: \printtechnical}
   \par
   \hrulefill\par
   \vspace{0.015\paperheight}
