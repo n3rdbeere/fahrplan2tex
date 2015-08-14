@@ -22,6 +22,8 @@ use JSON::Parse 'json_file_to_perl';
 
 my $json = json_file_to_perl('schedule.json');
 
+my $fahrplan_url = "https://events.ccc.de/camp/2015/Fahrplan/schedule.json";
+
 my @event_list;
 my $fahrplan_version = $json->{schedule}->{version};
 $fahrplan_version =~ m/(^\d+\.\d+)/;
@@ -35,6 +37,11 @@ foreach my $day (@days) {
     {
         push @event_list, $event;
     }
+}
+
+sub download_json_file {
+  system ("wget", "-O", "schedule.json", $fahrplan_url);
+  return;
 }
 
 sub parse_day {
@@ -61,7 +68,7 @@ sub print_tex {
   open my $fh, '> :encoding(UTF-8)', "talk" or die $!;
 
   # oder wenn die reihenfolge egal ist, einfach ( keys %$event )
-  foreach my $key (qw(dayofevent shorttext longtext duration language speaker location timeofevent track eventtitle subtitle id translation)) {
+  foreach my $key (qw(dayofevent shorttext longtext duration language speaker location timeofevent track eventtitle subtitle id translation technical)) {
     printf $fh '\%s{%s}', $key, $event->{$key};
     print $fh "\n";
   }
@@ -103,11 +110,14 @@ sub make_latex {
      my $shorttext = regex_magic($event->{abstract});
      my $longtext = regex_magic($event->{description});
      my $translation;
+     my $technical;
      if ($event->{room} eq "Project 2501") { 
-      $translation = "8011";
+      $translation  = "8011";
+      $technical    = "1611";
      }
      elsif ($event->{room} eq "Simulacron-3") { 
-      $translation = "8012";
+      $translation  = "8012";
+      $technical    = "1621";
      }
      %event_props = 
       (
@@ -123,14 +133,16 @@ sub make_latex {
         eventtitle            => clean_special_chars($event->{title}),
         subtitle              => clean_special_chars($event->{subtitle}),
         id                    => $event->{id},
-        translation           => $translation
+        translation           => $translation,
+        technical             =>  $technical
       );
     print_tex(\%event_props);
-    system("mkdir", "-p", $version);
     system("pdflatex", "-jobname", $version."/".$event->{room}."_".$event->{date}, "main.tex");
     #system("pdflatex", "-jobname", $event->{room}."_".$event->{date}, "main.tex");
     system("rm", $version."/".$event->{room}."_".$event->{date}.".aux", $version."/".$event->{room}."_".$event->{date}.".log");
   }
 }
 
+system("mkdir", "-p", $version);
+print "new file downloaded" if download_json_file;
 make_latex();
