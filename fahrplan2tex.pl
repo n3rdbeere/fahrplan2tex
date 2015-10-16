@@ -26,10 +26,10 @@ my $fahrplan_url = "https://events.ccc.de/camp/2015/Fahrplan/schedule.json";
 
 my @event_list;
 my $fahrplan_version = $json->{schedule}->{version};
-$fahrplan_version =~ m/(^\d+\.\d+)/;
-$fahrplan_version = $1; 
-$fahrplan_version =~ s/\./\_/;
-my $version = "cards_version_".$fahrplan_version;
+$fahrplan_version =~ m/^(\d+)\.(\d+)/;
+my $version = "cards_version_" . $1 . "_" . $2; 
+#$fahrplan_version =~ s/\./\_/;
+#my $version = "cards_version_".$fahrplan_version;
 
 my @days = @{ $json->{schedule}->{conference}->{days} };
 foreach my $day (@days) {
