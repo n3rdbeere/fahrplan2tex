@@ -54,29 +54,24 @@ sub make_persons {
   my @speaker_list;
   foreach my $person (@persons) {
     push @speaker_list, $person->{full_public_name};
-    #$speaker_list = $speaker_list.", ".$person->{full_public_name}; 
   }
   return (join ", ", @speaker_list);
-#  $speaker_list =~ s/^\,\s+//;
-#  return $speaker_list;
 }
 
 sub print_tex {
-  my $event  = shift();
+  my ($event)  = @_;
 
   open my $fh, '> :encoding(UTF-8)', "talk" or die $!;
 
-  # oder wenn die reihenfolge egal ist, einfach ( keys %$event )
-  foreach my $key (qw(dayofevent shorttext longtext duration language speaker location timeofevent track eventtitle subtitle id translation technical)) {
+  foreach my $key ( keys %{ $event } ) {
     printf $fh '\%s{%s}', $key, $event->{$key};
     print $fh "\n";
   }
-
   close $fh;
 }
 
-sub regex_magic{
-  my $string = shift;
+sub clean_special_chars{
+  my ($string) = @_;
   $string =~ s/\<ol\>\w*\<li\>//;
   $string =~ s/\<\/p\>/\\\\/g;
   $string =~ s/\<li\>/\\\\\- /g;
@@ -87,27 +82,28 @@ sub regex_magic{
   $string =~ s/\\\\$//;
   $string =~ s/\_//g;
   $string =~ s/\^\w*//g;
-  $string =~ s/\%/\\\%/g;
   $string =~ s/\&/\\\&/g;
+  $string =~ s/\$/\\\$/g;
+  $string =~ s/\%/\\\%/g;
+  $string =~ s/\#/\\\#/g;
   return $string;
 }
 
-sub clean_special_chars {
-  my $string = shift;
-  $string =~ s/\&/\\\&/g;
-  $string =~ s/\$/\\\$/g;
-  $string =~ s/\_//g;
-  $string =~ s/\%/\\\%/g;
-  $string =~ s/\#/\\\#/g;
-  $string =~ s/\^\w*//g;
-  return $string;
-}
+#sub clean_special_chars {
+#  my $string = shift;
+#  $string =~ s/\&/\\\&/g;
+#  $string =~ s/\$/\\\$/g;
+#  $string =~ s/\_//g;
+#  $string =~ s/\#/\\\#/g;
+#  $string =~ s/\^\w*//g;
+#  return $string;
+#}
 
 sub make_latex {
   my %event_props;
   foreach my $event (@event_list) {
-     my $shorttext = regex_magic($event->{abstract});
-     my $longtext = regex_magic($event->{description});
+     my $shorttext = $event->{abstract};
+     my $longtext = $event->{description};
      my $translation;
      my $technical;
      if ($event->{room} eq "Project 2501") { 
@@ -121,8 +117,8 @@ sub make_latex {
      %event_props = 
       (
         dayofevent            => clean_special_chars(parse_day( $event->{date} )),
-        shorttext             => $shorttext,
-        longtext              => $longtext,
+        shorttext             => clean_special_chars($shorttext),
+        longtext              => clean_special_chars($longtext),
         duration              => clean_special_chars($event->{duration}),
         language              => clean_special_chars($event->{language}),
         speaker               => clean_special_chars(make_persons( $event->{persons} ) ),
