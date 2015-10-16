@@ -1,0 +1,35 @@
+% this file is an example for the use of the template
+%
+% print via $parser the text in a file, put it in the LaTeX commands:
+%
+% Title:          \eventtitle{}
+% Subtitle:       \subtitle{}
+% Short Text:     \shorttext{}
+% Long Text:      \longtext{}       % Deprecated
+% Speaker Name:   \speaker{}
+% Short Bio:      \shortbio{}       % Deprecated
+% Duration:       \duration{}
+% Location:       \location{}
+% Time of Event:  \timeofevent{}
+% Day of Event:   \dayofevent{}
+% Track:          \track{}
+% Language:       \language{}
+% ID:             \id{}
+% TranslationDECT \translation{}
+% TechnicalDECT   \technical{}
+
+\eventtitle{Three Headed Monkey}
+\subtitle{Right behind you}
+\shorttext{There is an Island somewehere in the Sea..}
+%\longtext{This talk is about the specific species which some people say whether it is right behind you or does not exist at all.}
+%\speaker{Guybrush Threepwood}
+%\shortbio{Guybrush is a mighty pirate}
+\duration
+\location{A}
+\timeofevent{12:45}
+\dayofevent{1}
+\track{Monkey Island}
+\language{en}
+\id{42}
+\translation{2342}
+\technical{4223}
