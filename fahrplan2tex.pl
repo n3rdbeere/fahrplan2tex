@@ -28,13 +28,10 @@ my @event_list;
 my $fahrplan_version = $json->{schedule}->{version};
 $fahrplan_version =~ m/^(\d+)\.(\d+)/;
 my $version = "cards_version_" . $1 . "_" . $2; 
-#$fahrplan_version =~ s/\./\_/;
-#my $version = "cards_version_".$fahrplan_version;
 
 my @days = @{ $json->{schedule}->{conference}->{days} };
 foreach my $day (@days) {
-    foreach my $event ( @{ $day->{rooms}->{"Project 2501"} }, @{ $day->{rooms}->{"Simulacron-3"} } )
-    {
+    foreach my $event ( @{ $day->{rooms}->{"Project 2501"} }, @{ $day->{rooms}->{"Simulacron-3"} } ) {
         push @event_list, $event;
     }
 }
@@ -45,7 +42,7 @@ sub download_json_file {
 }
 
 sub parse_day {
-  my $date = shift;
+  my ($date) = @_;
   $date =~ m/^....-..-(..)T/;
   my $day = $1-12;
   return $day;
@@ -54,12 +51,14 @@ sub parse_day {
 sub make_persons {
   my (@persons_array) = @_;
   my @persons = @{ $persons_array[0] };
-  my $speaker_list = "";
+  my @speaker_list;
   foreach my $person (@persons) {
-    $speaker_list = $speaker_list.", ".$person->{full_public_name}; 
+    push @speaker_list, $person->{full_public_name};
+    #$speaker_list = $speaker_list.", ".$person->{full_public_name}; 
   }
-  $speaker_list =~ s/^\,\s+//;
-  return $speaker_list;
+  return (join ", ", @speaker_list);
+#  $speaker_list =~ s/^\,\s+//;
+#  return $speaker_list;
 }
 
 sub print_tex {
